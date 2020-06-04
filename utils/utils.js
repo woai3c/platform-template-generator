@@ -1,3 +1,4 @@
+const { methods } = require('./createPage')
 function sliceMethod(method) {
     return method.split('(')[0]
 }
@@ -23,4 +24,9 @@ function generateEventsStr(events) {
     })
 
     return result.slice(1)
+}
+
+module.exports = {
+    generateAttrStr,
+    generateEventsStr
 }

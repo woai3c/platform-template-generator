@@ -1,3 +1,5 @@
+const { generateAttrStr, generateEventsStr } = require('./utils')
+
 function generateComponent(data) {
     let result = ''
     switch (data.type) {
@@ -27,4 +29,8 @@ function generateSelectComponent(data) {
                 </el-option>
             </el-select>
         `
+}
+
+module.exports = {
+    generateComponent
 }

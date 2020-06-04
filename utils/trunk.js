@@ -1,3 +1,5 @@
+const { generateComponent } = require('./component')
+
 function generateSearch(data, searchData) {
     let result = `
                 <div class="form-container">
@@ -5,6 +7,7 @@ function generateSearch(data, searchData) {
                         <el-row class="global-div-search">
             `
     data.options.forEach(item => {
+        console.log(item)
         searchData[item.prop] = item.defaultVal? item.defaultVal : ''
         result += `
                 <el-col :lg="6" :md="8" :sm="12">
