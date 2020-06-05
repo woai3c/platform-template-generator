@@ -9,6 +9,9 @@ function generateComponent(data) {
         case 'select':
             result += generateSelectComponent(data)
             break
+        case 'date-picker':
+            result += generateDatePickerComponent(data)
+            break
     }
 
     return result
@@ -28,6 +31,16 @@ function generateSelectComponent(data) {
                                     :value="item.value">
                                 </el-option>
                             </el-select>`)
+}
+
+function generateDatePickerComponent(data) {
+    return (
+        `<el-date-picker 
+                                        v-model="searchData.${data.prop}"
+                                        ${generateAttrStr(data.attrs, true)}
+                                        ${generateEventsStr(data.events, true)}
+                                    >
+                                    </el-date-picker>`)
 }
 
 module.exports = {
