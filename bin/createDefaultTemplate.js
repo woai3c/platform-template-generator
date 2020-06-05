@@ -1,4 +1,9 @@
-const template = {
+#!/usr/bin/env node
+const fs = require('fs')
+const path = require('path')
+
+const data =
+`const template = {
     // 搜索区
     search: {
         labelWidth: '80px',
@@ -78,4 +83,8 @@ const template = {
     pagination: true,
 }
 
-module.exports = template
+module.exports = template`
+
+fs.writeFile(`${path.resolve(process.cwd())}/template.js`, data, err => {
+    if (err) throw err
+})

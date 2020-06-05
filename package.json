@@ -4,8 +4,8 @@
   "description": "",
   "main": "createPage.js",
   "bin": {
-    "createTemplate": "./createDefaultTemplate.js",
-    "createPage": "./createPage.js"
+    "ct": "./bin/createDefaultTemplate.js",
+    "cp": "./bin/createPage.js"
   },
   "dependencies": {
     "js-beautify": "^1.11.0"
