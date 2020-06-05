@@ -1,4 +1,5 @@
-const { methods } = require('./createPage')
+const { methods } = require('./data')
+
 function sliceMethod(method) {
     return method.split('(')[0]
 }
@@ -19,7 +20,9 @@ function generateEventsStr(events) {
     const keys = Object.keys(events)
     let result = ''
     keys.forEach(key => {
-        methods[sliceMethod(events[key])] = `${sliceMethod(events[key])}() {},`
+        methods[sliceMethod(events[key])] = `${sliceMethod(events[key])}() {
+
+                                                                        },`
         result += ` @${key}="${events[key]}"`
     })
 
@@ -28,5 +31,6 @@ function generateEventsStr(events) {
 
 module.exports = {
     generateAttrStr,
-    generateEventsStr
+    generateEventsStr,
+    sliceMethod,
 }

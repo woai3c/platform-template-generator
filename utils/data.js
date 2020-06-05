@@ -1,8 +1,23 @@
 const methods = {}
 const searchData = {}
-const data = {
-    global: true,
-    perssion: {},
+const pageData = {
+    data: {
+        global: true,
+        permission: {},
+    },
+    created: `created() {
+        const meta = this.$route.meta
+        this.global = meta.global
+        if (!this.global) {
+            this.permission = {}
+            meta.permission.forEach(item => {
+                this.permission[item] = true
+            })
+        }
+
+        if (!this.global && !this.permission.read) return
+        this.getUserData()
+    },`,
 }
 
 const tableData = {
@@ -10,44 +25,80 @@ const tableData = {
     currentRow: null,
 }
 
-const pageData = {
+const tableMethods = {
+    rowChange: `rowChange(row) {
+        this.currentRow = row.index
+    },`,
+    getRowIndex: `getRowIndex({ row, rowIndex }) {
+        row.index = rowIndex
+    },`,
+}
+
+const paginationData = {
     total: 0,
     pageSize: 20,
     pageNumber: 1,
 }
 
-const pageMethods = {
-    sizeChange(pageSize) {
+const paginationMethods = {
+    sizeChange: `sizeChange(pageSize) {
         this.pageSize = pageSize
         this.getUserData()
-    },
-    pageChange(pageNumber) {
+    },`,
+    pageChange: `pageChange(pageNumber) {
         this.pageNumber = pageNumber
         this.getUserData()
-    },
+    },`,
 }
 
-const tableMethods = {
-    rowChange(row) {
-        this.currentRow = row.index
-    },
-    getRowIndex({ row, rowIndex }) {
-        row.index = rowIndex
-    },
+function serialize() {
+    let result = `
+                data() {
+                    return ${serializeData()}
+                },
+                ${pageData.created}
+                methods: ${serializeMethods()}
+            `
+    return result
 }
 
-const created = {
-    created() {
-        const meta = this.$route.meta
-        this.global = meta.global
-        if (!this.global) {
-            this.perssion = {}
-            meta.perssion.forEach(item => {
-                this.perssion[item] = true
-            })
+function serializeData() {
+    const data = pageData.data
+    const keys = Object.keys(data)
+    let result = '{'
+    keys.forEach(key => {
+        let value = data[key]
+        if (Array.isArray(value)) {
+            value = '[]'
+        } else if (typeof value == 'object') {
+            value = '{}'
         }
 
-        if (!this.global && !this.perssion.read) return
-        this.getUserData()
-    },
+        result += `${key}: ${value},\n`
+    })
+
+    result += '}'
+    return result
+}
+
+function serializeMethods() {
+    const keys = Object.keys(methods)
+    let result = '{'
+    keys.forEach(key => {
+        result += '\n' + methods[key]
+    })
+
+    result += '}'
+    return result
+}
+
+module.exports = {
+    searchData,
+    methods,
+    pageData,
+    tableMethods,
+    tableData,
+    paginationData,
+    paginationMethods,
+    serialize,
 }

@@ -1,4 +1,4 @@
-const { generateAttrStr, generateEventsStr } = require('./utils')
+const { generateAttrStr, generateEventsStr } = require('./index')
 
 function generateComponent(data) {
     let result = ''
@@ -15,20 +15,19 @@ function generateComponent(data) {
 }
 
 function generateInputComponent(data) {
-    return `<el-input v-model="searchData.${data.prop}" ${generateAttrStr(data.attrs)} ${generateEventsStr(data.events)}`
+    return `<el-input v-model="searchData.${data.prop}" ${generateAttrStr(data.attrs)} ${generateEventsStr(data.events)} />`
 }
 
 function generateSelectComponent(data) {
-    return `
-            <el-select v-model="searchData.${data.prop}" ${generateAttrStr(data.attrs)} ${generateEventsStr(data.events)}>
-                <el-option
-                    v-for="item in ${data.options}"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                </el-option>
-            </el-select>
-        `
+    return (
+`<el-select v-model="searchData.${data.prop}" ${generateAttrStr(data.attrs)} ${generateEventsStr(data.events)}>
+                                <el-option
+                                    v-for="item in ${data.options}"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>`)
 }
 
 module.exports = {

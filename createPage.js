@@ -1,9 +1,18 @@
-const createTemplate = require('./createTemplate')
-const createScript = require('./createScript')
+#!/usr/bin/env node
+const fs = require('fs')
+const generateTemplate = require('./generateTemplate')
+const generateScript = require('./generateScript')
 
-let page = createTemplate()
-page += createScript()
-page += `<style scoped>
-        </style>`
+let pageStr = generateTemplate()
+pageStr += `
+${generateScript()}
+`
 
-console.log(page)
+pageStr += `
+<style scoped>
+</style>
+`
+
+fs.writeFile('template.vue', pageStr, err => {
+    if (err) throw err
+})
