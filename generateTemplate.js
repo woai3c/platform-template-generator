@@ -2,7 +2,6 @@ const { search, button, table, pagination } = require('./template')
 const { generateSearch, generateButton, generateTable, generatePagination } = require('./utils/generator')
 const beautify_html = require('js-beautify').html;
 
-
 function generateTemplate() {
     let result = 
 `<template>
