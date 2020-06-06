@@ -18,12 +18,12 @@ function generateComponent(data) {
 }
 
 function generateInputComponent(data) {
-    return `<el-input v-model="searchData.${data.prop}" ${generateAttrStr(data.attrs)} ${generateEventsStr(data.events)} />`
+    return `<el-input v-model="searchData.${data.prop}" ${generateAttrStr(data.attrs)} ${generateAttrStr(data.dattrs, false, true)} ${generateEventsStr(data.events)} />`
 }
 
 function generateSelectComponent(data) {
     return (
-`<el-select v-model="searchData.${data.prop}" ${generateAttrStr(data.attrs)} ${generateEventsStr(data.events)}>
+`<el-select v-model="searchData.${data.prop}" ${generateAttrStr(data.attrs)} ${generateAttrStr(data.dattrs, false, true)} ${generateEventsStr(data.events)}>
                                 <el-option
                                     v-for="item in ${data.options}"
                                     :key="item.value"
@@ -38,6 +38,7 @@ function generateDatePickerComponent(data) {
         `<el-date-picker 
                                         v-model="searchData.${data.prop}"
                                         ${generateAttrStr(data.attrs, true)}
+                                        ${generateAttrStr(data.dattrs, false, true)}
                                         ${generateEventsStr(data.events, true)}
                                     >
                                     </el-date-picker>`)

@@ -1,10 +1,10 @@
-const { methods } = require('./data')
+const { methods, pageData } = require('./data')
 
 function sliceMethod(method) {
     return method.split('(')[0]
 }
 
-function generateAttrStr(attrs, isWrap) {
+function generateAttrStr(attrs, isWrap, isDynamic) {
     if (!attrs) return ''
     const keys = Object.keys(attrs)
     let result = ''
@@ -13,7 +13,12 @@ function generateAttrStr(attrs, isWrap) {
             result += '\n'
         }
 
-        result += ` ${key}="${attrs[key]}"`
+        if (isDynamic) {
+            result += ` :${key}="${attrs[key]}"`
+            pageData.data[attrs[key]] = `''` // 默认值为空字符串
+        } else {
+            result += ` ${key}="${attrs[key]}"`
+        }
     })
 
     return result.slice(1)

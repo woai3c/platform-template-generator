@@ -1,5 +1,4 @@
-const { methods } = require('./data')
-const { sliceMethod, generateAttrStr, generateEventsStr } = require('./index')
+const { generateAttrStr, generateEventsStr } = require('./index')
 
 const rightBtn = {
     print: true,
@@ -26,7 +25,7 @@ function generateElementButton(data) {
         permissionStr = `v-if="global || permission.${data.permission}"`
     }
 
-    return `\n<el-button ${permissionStr} ${generateAttrStr(data.attrs)} ${generateEventsStr(data.events)}>${data.text}</el-button>`
+    return `\n<el-button ${permissionStr} ${generateAttrStr(data.attrs)} ${generateAttrStr(data.dattrs, false, true)} ${generateEventsStr(data.events)}>${data.text}</el-button>`
 }
 
 function generateVButton(data) {
@@ -36,7 +35,7 @@ function generateVButton(data) {
         permissionStr = `v-if="global || permission.${permission}"`
     }
 
-    return `\n<VButton ${permissionStr} ${generateAttrStr(data.attrs)} ${generateEventsStr(data.events)} />`
+    return `\n<VButton ${permissionStr} ${generateAttrStr(data.attrs)} ${generateAttrStr(data.dattrs, false, true)} ${generateEventsStr(data.events)} />`
 }
 
 function isRightBtn(btn) {

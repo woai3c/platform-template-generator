@@ -50,6 +50,9 @@ const data =
             attrs: {
                 type: 'primary'
             },
+            dattrs: {
+                disabled: 'isDisabled',
+            },
             events: {
                 click: 'handleClick'
             },
@@ -91,11 +94,22 @@ const data =
     // 弹窗区
     modal: [
         {
-            attrs: {
-
+            dattrs: { // 动态属性，即 :attr="name" 这种模式，会自动生成对应的变量 name
+                show: 'isShowModal',
+                title: '动态标题',
             },
             events: {
-
+                hideModal: 'hideModal(0)',
+                submit: 'submit0',
+            }
+        },
+        {
+            attrs: { // 静态属性
+                title: '静态标题',
+            },
+            events: {
+                hideModal: 'hideModal(1)',
+                submit: 'submit1',
             }
         }
     ]
