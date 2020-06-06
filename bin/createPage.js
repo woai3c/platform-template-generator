@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 const fs = require('fs')
 const path = require('path')
-const generateTemplate = require(`${__dirname}/../generateTemplate`)
-const generateScript = require(`${__dirname}/../generateScript`)
-let { name } = require(`${__dirname}/../template`)
+const generateTemplate = require('../utils/generateTemplate')
+const generateScript = require('../utils/generateScript')
+let { name } = require(`${path.resolve(process.cwd())}/template.js`)
 
 let pageStr = generateTemplate()
 pageStr += `

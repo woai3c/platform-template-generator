@@ -1,5 +1,6 @@
-const { search, button, table, pagination } = require('./template')
-const { generateSearch, generateButton, generateTable, generatePagination } = require('./utils/generator')
+const path = require('path')
+const { search, button, table, pagination } = require(`${path.resolve(process.cwd())}/template.js`)
+const { generateSearch, generateButton, generateTable, generatePagination } = require('./generator')
 const beautify_html = require('js-beautify').html;
 
 function generateTemplate() {

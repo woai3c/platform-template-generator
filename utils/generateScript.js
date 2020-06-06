@@ -1,4 +1,4 @@
-const { serialize } = require('./utils/data')
+const { serialize } = require('./data')
 const beautify = require('js-beautify').js_beautify
 
 function generateScript() {

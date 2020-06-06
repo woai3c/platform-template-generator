@@ -16,7 +16,6 @@ const pageData = {
         }
 
         if (!this.global && !this.permission.read) return
-        this.getUserData()
     },`,
 }
 

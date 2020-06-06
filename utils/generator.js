@@ -1,7 +1,6 @@
-const { generateComponent } = require('./component')
-const { generateElementButton, generateVButton } = require('./button')
+const { generateComponent } = require('./generateComponent')
+const { generateElementButton, generateVButton, isRightBtn } = require('./button')
 const { searchData, methods, pageData, tableData, tableMethods, paginationData, paginationMethods } = require('./data')
-const { isRightBtn } = require('./button')
 
 function generateSearch(data) {
     let result = 
