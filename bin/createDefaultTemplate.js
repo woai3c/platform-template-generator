@@ -40,7 +40,9 @@ const data =
             attrs: {
                 type: 'add'
             },
-            callback: 'showModal(0)',
+            events: {
+                callback: 'showModal(0)',
+            }
             // permission: 'add', 如果不写权限，将按默认配置的权限设置，如果没有找到默认配置，则不添加权限。具体配置请看 utils/button.js
         },
         {
@@ -57,13 +59,17 @@ const data =
             attrs: {
                 type: 'edit',
             },
-            callback: 'showModal(1)',
+            events: {
+                callback: 'showModal(1)',
+            }
         },
         {
             attrs: {
                 type: 'export'
             },
-            callback: 'exportFile',
+            events: {
+                callback: 'exportFile',
+            }
         },
     ],
 
@@ -81,6 +87,18 @@ const data =
 
     // 分页区
     pagination: true,
+
+    // 弹窗区
+    modal: [
+        {
+            attrs: {
+
+            },
+            events: {
+
+            }
+        }
+    ]
 }
 
 module.exports = template`

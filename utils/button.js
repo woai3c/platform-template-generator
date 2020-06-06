@@ -36,15 +36,7 @@ function generateVButton(data) {
         permissionStr = `v-if="global || permission.${permission}"`
     }
 
-    let callback = ''
-    if (data.callback) {
-        callback = `@callback="${data.callback}"`
-        methods[sliceMethod(data.callback)] = `${sliceMethod(data.callback)}() {
-
-                                                                        },`
-    }
-
-    return `\n<VButton ${permissionStr} ${generateAttrStr(data.attrs)} ${callback} />`
+    return `\n<VButton ${permissionStr} ${generateAttrStr(data.attrs)} ${generateEventsStr(data.events)} />`
 }
 
 function isRightBtn(btn) {
