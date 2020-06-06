@@ -22,6 +22,10 @@ const pageData = {
     },`,
 }
 
+const tableHeight = {
+    max: 825 // 默认高度
+}
+
 const tableData = {
     tableData: [],
     currentRow: null,
@@ -128,7 +132,6 @@ function serializeData() {
 }
 
 function subSerializeData(data) {
-    console.log(data)
     const keys = Object.keys(data)
     let result = '{'
     keys.forEach(key => {
@@ -166,4 +169,5 @@ module.exports = {
     paginationData,
     paginationMethods,
     serialize,
+    tableHeight,
 }

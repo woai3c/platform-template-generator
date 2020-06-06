@@ -1,6 +1,6 @@
 const { generateComponent } = require('./generateComponent')
 const { generateElementButton, generateVButton, isRightBtn } = require('./button')
-const { searchData, methods, pageData, tableData, tableMethods, paginationData, paginationMethods } = require('./data')
+const { searchData, methods, pageData, tableData, tableMethods, paginationData, paginationMethods, tableHeight } = require('./data')
 const { generateAttrStr, generateEventsStr } = require('./index')
 
 function generateSearch(data) {
@@ -10,6 +10,7 @@ function generateSearch(data) {
             <el-form ref="searchForm" :model="searchData" label-width="${data.labelWidth? data.labelWidth : '80px'}">
                 <el-row class="global-div-search">`
 
+    tableHeight.max -= (Math.ceil(data.options.length / 4) * 50 + 71)
     data.options.forEach(item => {
         if (typeof item.defaultVal == 'string') {
             searchData[item.prop] = `'${item.defaultVal}'`
@@ -38,6 +39,7 @@ function generateSearch(data) {
 
 function generateButton(data) {
     if (!data || !data.length) return ''
+    tableHeight.max -= 42
     let leftBtnStr = ''
     let rightBtnStr = ''
     data.forEach(item => {
@@ -69,7 +71,7 @@ function generateTable(data) {
     Object.assign(pageData.data, tableData)
     Object.assign(methods, tableMethods)
 
-    let result = `<el-table id="printTable" border stripe :data="tableData" highlight-current-row max-height="580"
+    let result = `<el-table id="printTable" border stripe :data="tableData" highlight-current-row max-height="templateTableMaxHeight"
                     @row-click="rowChange" :row-class-name="getRowIndex">`
 
     data.forEach(item => {
@@ -81,6 +83,7 @@ function generateTable(data) {
 }
 
 function generatePagination() {
+    tableHeight.max -= 72
     Object.assign(pageData.data, paginationData)
     Object.assign(methods, paginationMethods)
     
