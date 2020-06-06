@@ -11,7 +11,12 @@ function generateSearch(data) {
                 <el-row class="global-div-search">`
 
     data.options.forEach(item => {
-        searchData[item.prop] = item.defaultVal? item.defaultVal : ''
+        if (typeof item.defaultVal == 'string') {
+            searchData[item.prop] = `'${item.defaultVal}'`
+        } else {
+            searchData[item.prop] = item.defaultVal
+        }
+        
         result += 
 `                   
                     <el-col :lg="6" :md="8" :sm="12">

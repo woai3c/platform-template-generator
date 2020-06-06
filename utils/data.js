@@ -123,16 +123,22 @@ export default {
 
 function serializeData() {
     const data = pageData.data
+    data.searchData = subSerializeData(searchData)
+    return subSerializeData(data)
+}
+
+function subSerializeData(data) {
+    console.log(data)
     const keys = Object.keys(data)
     let result = '{'
     keys.forEach(key => {
         let value = data[key]
         if (Array.isArray(value)) {
             value = '[]'
-        } else if (typeof value == 'object') {
+        } else if (typeof value == 'object' && value !== null) {
             value = '{}'
         }
-
+        
         result += `${key}: ${value},\n`
     })
 
