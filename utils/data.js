@@ -1,3 +1,6 @@
+const path = require('path')
+const { modal, button } = require(`${path.resolve(process.cwd())}/template.js`)
+
 const methods = {}
 const searchData = {}
 const pageData = {
@@ -50,14 +53,71 @@ const paginationMethods = {
     },`,
 }
 
+function generateImort() {
+    let result = ''
+    if (modal) {
+        result += `import Modal from '@/components/Modal'
+        `
+    }
+
+    let hasVButton = false
+    if (button) {
+        for (let i = 0, len = button.length; i < len; i++) {
+            if (!button[i].type) {
+                hasVButton = true
+                break
+            }
+        }
+    }
+    
+    if (hasVButton) {
+        result += `import VButton from '@/components/VButton'
+        `
+    }
+
+    return result
+}
+
+function generateComponents() {
+    let hasVButton = false
+    if (button) {
+        for (let i = 0, len = button.length; i < len; i++) {
+            if (!button[i].type) {
+                hasVButton = true
+                break
+            }
+        }
+    }
+
+    if (!modal && !hasVButton) {
+        return ''
+    }
+
+    let result = 'components: { '
+    if (modal) {
+        result += 'Modal'
+    }
+
+    if (hasVButton) {
+        if (modal) result += ', '
+        result += 'VButton'
+    }
+
+    return result + ' },'
+}
+
 function serialize() {
-    let result = `
-                data() {
-                    return ${serializeData()}
-                },
-                ${pageData.created}
-                methods: ${serializeMethods()}
-            `
+    let result = 
+`
+${generateImort()}
+export default {
+    ${generateComponents()}data() {
+        return ${serializeData()}
+    },
+    ${pageData.created}
+    methods: ${serializeMethods()}
+}
+`
     return result
 }
 

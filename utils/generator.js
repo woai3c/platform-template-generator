@@ -1,6 +1,7 @@
 const { generateComponent } = require('./generateComponent')
 const { generateElementButton, generateVButton, isRightBtn } = require('./button')
 const { searchData, methods, pageData, tableData, tableMethods, paginationData, paginationMethods } = require('./data')
+const { generateAttrStr, generateEventsStr } = require('./index')
 
 function generateSearch(data) {
     let result = 
@@ -90,9 +91,25 @@ function generatePagination() {
             </el-pagination>`
 }
 
+function generateModal(data) {
+    if (!data || !data.length) return ''
+    let result = ''
+    data.forEach(item => {
+        result += 
+        `
+        <Modal ${generateAttrStr(item.attrs)} ${generateAttrStr(item.dattrs, false, true)} ${generateEventsStr(item.events)}>
+
+        </Modal>
+        `
+    })
+
+    return result
+}
+
 module.exports = {
     generateSearch,
     generateButton,
     generateTable,
     generatePagination,
+    generateModal,
 }
