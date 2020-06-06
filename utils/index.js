@@ -14,8 +14,13 @@ function generateAttrStr(attrs, isWrap, isDynamic) {
         }
 
         if (isDynamic) {
-            result += ` :${key}="${attrs[key]}"`
-            pageData.data[attrs[key]] = `''` // 默认值为空字符串
+            if (typeof attrs[key] == 'object') {
+                result += ` :${key}="${attrs[key].key}"`
+                pageData.data[attrs[key].key] = attrs[key].value
+            } else {
+                result += ` :${key}="${attrs[key]}"`
+                pageData.data[attrs[key]] = `''` // 默认值为空字符串
+            }
         } else {
             result += ` ${key}="${attrs[key]}"`
         }

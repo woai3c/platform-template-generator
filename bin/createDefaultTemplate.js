@@ -95,8 +95,11 @@ const data =
     modal: [
         {
             dattrs: { // 动态属性，即 :attr="name" 这种模式，会自动生成对应的变量 name
-                show: 'isShowModal',
-                title: '动态标题',
+                show: { // 显示声明对应的变量及默认值
+                    key: 'isShowModal',
+                    value: false,
+                },
+                title: 'title', // 默认为空字符串
             },
             events: {
                 hideModal: 'hideModal(0)',
