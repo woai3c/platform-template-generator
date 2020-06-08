@@ -57,65 +57,64 @@ const paginationMethods = {
     },`,
 }
 
-function generateImort() {
-    let result = ''
-    if (modal) {
-        result += `import Modal from '@/components/Modal'
-        `
-    }
+// function generateImort() {
+//     let result = ''
+//     if (modal) {
+//         result += `import Modal from '@/components/Modal'
+//         `
+//     }
 
-    let hasVButton = false
-    if (button) {
-        for (let i = 0, len = button.length; i < len; i++) {
-            if (!button[i].type) {
-                hasVButton = true
-                break
-            }
-        }
-    }
+//     let hasVButton = false
+//     if (button) {
+//         for (let i = 0, len = button.length; i < len; i++) {
+//             if (!button[i].type) {
+//                 hasVButton = true
+//                 break
+//             }
+//         }
+//     }
     
-    if (hasVButton) {
-        result += `import VButton from '@/components/VButton'
-        `
-    }
+//     if (hasVButton) {
+//         result += `import VButton from '@/components/VButton'
+//         `
+//     }
 
-    return result
-}
+//     return result
+// }
 
-function generateComponents() {
-    let hasVButton = false
-    if (button) {
-        for (let i = 0, len = button.length; i < len; i++) {
-            if (!button[i].type) {
-                hasVButton = true
-                break
-            }
-        }
-    }
+// function generateComponents() {
+//     let hasVButton = false
+//     if (button) {
+//         for (let i = 0, len = button.length; i < len; i++) {
+//             if (!button[i].type) {
+//                 hasVButton = true
+//                 break
+//             }
+//         }
+//     }
 
-    if (!modal && !hasVButton) {
-        return ''
-    }
+//     if (!modal && !hasVButton) {
+//         return ''
+//     }
 
-    let result = 'components: { '
-    if (modal) {
-        result += 'Modal'
-    }
+//     let result = 'components: { '
+//     if (modal) {
+//         result += 'Modal'
+//     }
 
-    if (hasVButton) {
-        if (modal) result += ', '
-        result += 'VButton'
-    }
+//     if (hasVButton) {
+//         if (modal) result += ', '
+//         result += 'VButton'
+//     }
 
-    return result + ' },'
-}
+//     return result + ' },'
+// }
 
 function serialize() {
     let result = 
 `
-${generateImort()}
 export default {
-    ${generateComponents()}data() {
+    data() {
         return ${serializeData()}
     },
     ${pageData.created}
