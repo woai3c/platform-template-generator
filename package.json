@@ -5,7 +5,7 @@
   "main": "createPage.js",
   "bin": {
     "ct": "./bin/createDefaultTemplate.js",
-    "cp": "./bin/createPage.js"
+    "cpa": "./bin/createPage.js"
   },
   "dependencies": {
     "js-beautify": "^1.11.0"
