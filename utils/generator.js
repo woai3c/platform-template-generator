@@ -1,16 +1,32 @@
 const { generateComponent } = require('./generateComponent')
 const { generateElementButton, generateVButton, isRightBtn } = require('./button')
-const { searchData, methods, pageData, tableData, tableMethods, paginationData, paginationMethods, tableHeight } = require('./data')
+const { searchData, methods, pageData, tableData, tableMethods, paginationData, paginationMethods } = require('./data')
 const { generateAttrStr, generateEventsStr } = require('./index')
 
 function generateSearch(data) {
     let result = 
 `
-        <div class="form-container">
+        <Search @search="search" @reset="resetSearch" v-if="global || permission.read">
             <el-form ref="searchForm" :model="searchData" label-width="${data.labelWidth? data.labelWidth : '80px'}">
                 <el-row class="global-div-search">`
 
-    tableHeight.max -= (Math.ceil(data.options.length / 4) * 50 + 71)
+    methods.resetSearch = `resetSearch() {
+        // 重置 searchData
+        this.searchData = {}
+    },`
+
+    methods.search = `search(val) {
+        if (val !== undefined) {
+            this.searchData.globalSearchValue = val
+        } else {
+            this.searchData.globalSearchValue = ''
+        }
+
+        this.pageNumber = 1
+        // 在这需要执行搜索函数，例如用户管理页面是 this.getUserData()
+        // this.getUserData()
+    },`
+
     data.options.forEach(item => {
         if (typeof item.defaultVal == 'string') {
             searchData[item.prop] = `'${item.defaultVal}'`
@@ -29,17 +45,14 @@ function generateSearch(data) {
 
     result += 
 `                   
-                    <el-button type="primary" class="global-btn-search" @click="search" v-if="global || permission.read">搜索</el-button>
                 </el-row>
             </el-form>
-        </div>`
+        </Search>`
 
     return result
 }
 
-function generateButton(data) {
-    if (!data || !data.length) return ''
-    tableHeight.max -= 42
+function generateButton(data, hasTable) {
     let leftBtnStr = ''
     let rightBtnStr = ''
     data.forEach(item => {
@@ -54,36 +67,40 @@ function generateButton(data) {
         }
     })
     
+    let str = hasTable
+                ? rightBtnStr.slice(1) + '\n' + '<CheckboxGroup @reset="resetCheckbox" :options="options" :map="labelMap" v-model="checkedVals" />'
+                : rightBtnStr.slice(1)
 
     return `            <div class="btn-group">
                 <div class="div-btn">
                     ${leftBtnStr.slice(1)}
                 </div>
                 <div class="right-btn">
-                    ${rightBtnStr.slice(1)}
+                    ${str}
                 </div>
-            </div>
-        `
+            </div>`
 }
 
-function generateTable(data) {
-    if (!data || !data.length) return ''
+function generateTable() {
     Object.assign(pageData.data, tableData)
     Object.assign(methods, tableMethods)
 
-    let result = `<el-table id="printTable" border stripe :data="tableData" highlight-current-row max-height="templateTableMaxHeight"
-                    @row-click="rowChange" :row-class-name="getRowIndex">`
-
-    data.forEach(item => {
-        result += `<el-table-column prop="${item.prop}" label="${item.label}"></el-table-column>`
-    })
-
-    result += '</el-table>'
-    return result
+    return `
+            <el-table id="printTable" border stripe :data="tableData" highlight-current-row @row-click="rowChange" :max-height="maxHeight"
+            :row-class-name="getRowIndex" @sort-change="handleTableSortChange">
+                <el-table-column v-for="(item, index) in checkedVals" :key="index" :label="labelMap[item]" 
+                :sortable="isCustom(item)">
+                    <template slot-scope="scope">
+                        <span v-if="item != 'detail'">
+                            {{ scope.row[item] }}
+                        </span>
+                        <span v-else @click="showDetail(scope.row)" class="global-span-detail">详情</span>
+                    </template>
+                </el-table-column>
+            </el-table>`
 }
 
 function generatePagination() {
-    tableHeight.max -= 72
     Object.assign(pageData.data, paginationData)
     Object.assign(methods, paginationMethods)
     

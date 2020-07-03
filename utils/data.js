@@ -1,13 +1,26 @@
-const path = require('path')
-const { modal, button } = require(`${path.resolve(process.cwd())}/template.js`)
+const methods = {
+    init: `init() {
+        // 在这里执行初始化函数，包括国际化，表格数据查找
+        getI18n(this, [
 
-const methods = {}
+        ])
+        .then(res => {
+
+        })
+    },`,
+}
 const searchData = {}
 const pageData = {
     data: {
         global: true,
         permission: {},
+        timer: null,
     },
+    computed: `computed: {
+        maxHeight() {
+            return this.$store.state.app.maxTableHeight
+        },
+    },`,
     created: `created() {
         const meta = this.$route.meta
         this.global = meta.global
@@ -20,23 +33,62 @@ const pageData = {
 
         if (!this.global && !this.permission.read) return
     },`,
-}
+    mounted: `mounted() {
+        this.$nextTick(() => {
+            this.$calcTableHeight()
+        })
 
-const tableHeight = {
-    max: 825 // 默认高度
+        window.onresize = () => {
+            clearTimeout(this.timer)
+            this.timer = setTimeout(() => {
+                this.$calcTableHeight()
+            }, 50)
+        }
+    },`,
+    destroyed: `destroyed() {
+        window.onresize = null
+        clearTimeout(this.timer)
+    },`,
 }
 
 const tableData = {
     tableData: [],
     currentRow: null,
+    sort: {}, // 当前排序的选项
+    sortKey: [], // 需要排序的 key
+    sortMap: {}, // 国际化映射 需要使用 getI18n 配置
+    options: 'options',
+    defaultOptions: '[...options]',
+    checkedVals: 'options',
+    labelMap: {}, // 表格文字映射 需要使用 getI18n 配置
 }
 
 const tableMethods = {
+    isCustom: `isCustom(item) {
+        return this.sortKey.includes(item)? 'custom' : false
+    },`,
     rowChange: `rowChange(row) {
         this.currentRow = row.index
     },`,
     getRowIndex: `getRowIndex({ row, rowIndex }) {
         row.index = rowIndex
+    },`,
+    handleTableSortChange: `handleTableSortChange(column) {
+        this.sort = {
+            property: this.sortMap[column.column.label],
+            sorted: column.order == 'descending'? 'DESC' : 'ASC',
+        }
+        
+        // 这里需要重新搜索数据
+        // this.getUserData()
+    },`,
+    resetCheckbox: `resetCheckbox() {
+        this.options = [...this.defaultOptions]
+        this.checkedVals = [...this.defaultOptions]
+    },`,
+    getCheckboxCache: `getCheckboxCache() {
+        if (this.$getTableCache('vals')) this.checkedVals = this.$getTableCache('vals')
+        if (this.$getTableCache('options')) this.options = this.$getTableCache('options')
     },`,
 }
 
@@ -49,11 +101,13 @@ const paginationData = {
 const paginationMethods = {
     sizeChange: `sizeChange(pageSize) {
         this.pageSize = pageSize
-        this.getUserData()
+        // 这里需要重新搜索数据
+        // this.getUserData()
     },`,
     pageChange: `pageChange(pageNumber) {
         this.pageNumber = pageNumber
-        this.getUserData()
+        // 这里需要重新搜索数据
+        // this.getUserData()
     },`,
 }
 
@@ -115,9 +169,13 @@ function serialize() {
 `
 export default {
     data() {
+        const options = []
         return ${serializeData()}
     },
+    ${pageData.computed}
     ${pageData.created}
+    ${pageData.mounted}
+    ${pageData.destroyed}
     methods: ${serializeMethods()}
 }
 `
@@ -168,5 +226,4 @@ module.exports = {
     paginationData,
     paginationMethods,
     serialize,
-    tableHeight,
 }
