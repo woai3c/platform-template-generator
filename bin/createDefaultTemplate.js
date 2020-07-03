@@ -77,16 +77,7 @@ const data =
     ],
 
     // 表格区
-    table: [
-        {
-            prop: 'dataTypeName',
-            label: '选项名称',
-        },
-        {
-            prop: 'dataItemName',
-            label: '选项内容',
-        },
-    ],
+    table: true,
 
     // 分页区
     pagination: true,
