@@ -18,7 +18,7 @@ function generateComponent(data) {
 }
 
 function generateInputComponent(data) {
-    return `<el-input v-model="searchData.${data.prop}" ${generateAttrStr(data.attrs)} ${generateAttrStr(data.dattrs, false, true)} ${generateEventsStr(data.events)} />`
+    return `<v-input v-model="searchData.${data.prop}" ${generateAttrStr(data.attrs)} ${generateAttrStr(data.dattrs, false, true)} ${generateEventsStr(data.events)} />`
 }
 
 function generateSelectComponent(data) {
