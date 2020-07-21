@@ -53,6 +53,7 @@ function generateSearch(data) {
 }
 
 function generateButton(data, hasTable) {
+    if (!data || !data.length) return ''
     let leftBtnStr = ''
     let rightBtnStr = ''
     data.forEach(item => {
