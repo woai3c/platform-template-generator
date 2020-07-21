@@ -32,6 +32,7 @@ const pageData = {
         }
 
         if (!this.global && !this.permission.read) return
+        this.init()
     },`,
     mounted: `mounted() {
         this.$nextTick(() => {

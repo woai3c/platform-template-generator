@@ -53,7 +53,13 @@ function generateSearch(data) {
 }
 
 function generateButton(data, hasTable) {
-    if (!data || !data.length) return ''
+    if (!data || !data.length) {
+        return `<div class="global-div-btn"></div>
+        <div class="global-right-btn">
+            <CheckboxGroup @reset="resetCheckbox" :options="options" :map="labelMap" v-model="checkedVals" />
+        </div>`
+    }
+
     let leftBtnStr = ''
     let rightBtnStr = ''
     data.forEach(item => {
@@ -72,11 +78,11 @@ function generateButton(data, hasTable) {
                 ? rightBtnStr.slice(1) + '\n' + '<CheckboxGroup @reset="resetCheckbox" :options="options" :map="labelMap" v-model="checkedVals" />'
                 : rightBtnStr.slice(1)
 
-    return `            <div class="btn-group">
-                <div class="div-btn">
+    return `            <div class="global-btn-group">
+                <div class="global-div-btn">
                     ${leftBtnStr.slice(1)}
                 </div>
-                <div class="right-btn">
+                <div class="global-right-btn">
                     ${str}
                 </div>
             </div>`
