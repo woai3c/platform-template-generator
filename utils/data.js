@@ -90,6 +90,14 @@ const tableMethods = {
         if (this.$getTableCache('vals')) this.checkedVals = this.$getTableCache('vals')
         if (this.$getTableCache('options')) this.options = this.$getTableCache('options')
     },`,
+    isSelectedData: `isSelectedData() {
+        if (this.currentRow === null) {
+            this.$message.error(this.$t(110018))
+            return
+        }
+
+        return true
+    },`,
 }
 
 const paginationData = {
