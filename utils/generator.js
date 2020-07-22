@@ -75,7 +75,7 @@ function generateButton(data, hasTable) {
     })
     
     let str = hasTable
-                ? rightBtnStr.slice(1) + '\n' + '<CheckboxGroup @reset="resetCheckbox" :options="options" :map="labelMap" v-model="checkedVals" />'
+                ? rightBtnStr.slice(1) + '<CheckboxGroup @reset="resetCheckbox" :options="options" :map="labelMap" v-model="checkedVals" />'
                 : rightBtnStr.slice(1)
 
     return `            <div class="global-btn-group">
