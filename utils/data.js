@@ -1,7 +1,7 @@
 const methods = {
     init: `init() {
         // 在这里执行初始化函数，包括国际化，表格数据查找
-        getI18n(this, [
+        getI18n([
 
         ])
         .then(res => {
