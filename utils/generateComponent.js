@@ -1,4 +1,5 @@
 const { generateAttrStr, generateEventsStr } = require('./index')
+const { pageData } = require('./data')
 
 function generateComponent(data) {
     let result = ''
@@ -9,7 +10,7 @@ function generateComponent(data) {
         case 'select':
             result += generateSelectComponent(data)
             break
-        case 'date-picker':
+        case 'date':
             result += generateDatePickerComponent(data)
             break
     }
@@ -22,6 +23,10 @@ function generateInputComponent(data) {
 }
 
 function generateSelectComponent(data) {
+    if (data.options) {
+        pageData.data[data.options] = []
+    }
+
     return (
 `<el-select v-model="searchData.${data.prop}" ${generateAttrStr(data.attrs)} ${generateAttrStr(data.dattrs, false, true)} ${generateEventsStr(data.events)}>
                                 <el-option
