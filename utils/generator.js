@@ -54,9 +54,11 @@ function generateSearch(data) {
 
 function generateButton(data, hasTable) {
     if (!data || !data.length) {
-        return `<div class="global-div-btn"></div>
-        <div class="global-right-btn">
-            <CheckboxGroup @reset="resetCheckbox" :options="options" :map="labelMap" v-model="checkedVals" />
+        return `<div class="global-btn-group">
+            <div class="global-div-btn"></div>
+            <div class="global-right-btn">
+                <CheckboxGroup @reset="resetCheckbox" :options="options" :map="labelMap" v-model="checkedVals" />
+            </div>
         </div>`
     }
 
