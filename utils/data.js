@@ -80,7 +80,7 @@ const tableMethods = {
         }
         
         // 这里需要重新搜索数据
-        // this.getUserData()
+        this.getUserData()
     },`,
     resetCheckbox: `resetCheckbox() {
         this.options = [...this.defaultOptions]
@@ -110,12 +110,12 @@ const paginationMethods = {
     sizeChange: `sizeChange(pageSize) {
         this.pageSize = pageSize
         // 这里需要重新搜索数据
-        // this.getUserData()
+        this.getUserData()
     },`,
     pageChange: `pageChange(pageNumber) {
         this.pageNumber = pageNumber
         // 这里需要重新搜索数据
-        // this.getUserData()
+        this.getUserData()
     },`,
 }
 
