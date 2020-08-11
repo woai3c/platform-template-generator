@@ -18,8 +18,7 @@ function generateSearch(data) {
         }
 
         this.pageNumber = 1
-        // 在这需要执行搜索函数，例如用户管理页面是 this.getUserData()
-        this.getUserData()
+        this.getData()
     },`
 
     data.options.forEach(item => {

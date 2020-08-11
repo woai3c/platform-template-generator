@@ -79,8 +79,8 @@ const tableMethods = {
             sorted: column.order == 'descending'? 'DESC' : 'ASC',
         }
         
-        // 这里需要重新搜索数据
-        this.getUserData()
+        // 默认获取数据函数，页面多个地方会使用，不注释是为了引起开发注意，统一替换
+        this.getData()
     },`,
     resetCheckbox: `resetCheckbox() {
         this.options = [...this.defaultOptions]
@@ -109,13 +109,11 @@ const paginationData = {
 const paginationMethods = {
     sizeChange: `sizeChange(pageSize) {
         this.pageSize = pageSize
-        // 这里需要重新搜索数据
-        this.getUserData()
+        this.getData()
     },`,
     pageChange: `pageChange(pageNumber) {
         this.pageNumber = pageNumber
-        // 这里需要重新搜索数据
-        this.getUserData()
+        this.getData()
     },`,
 }
 
