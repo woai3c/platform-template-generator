@@ -180,5 +180,6 @@ module.exports = {
     tableData,
     paginationData,
     paginationMethods,
+    subSerializeData,
     serialize,
 }

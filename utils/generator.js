@@ -1,6 +1,6 @@
 const { generateComponent } = require('./generateComponent')
 const { generateElementButton, generateVButton, isRightBtn } = require('./button')
-const { searchData, methods, pageData, tableData, tableMethods, paginationData, paginationMethods } = require('./data')
+const { searchData, subSerializeData, methods, pageData, tableData, tableMethods, paginationData, paginationMethods } = require('./data')
 const { generateAttrStr, generateEventsStr } = require('./index')
 
 function generateSearch(data) {
@@ -9,11 +9,6 @@ function generateSearch(data) {
         <Search @search="search" @reset="resetSearch" v-if="global || permission.read">
             <el-form ref="searchForm" :model="searchData" label-width="${data.labelWidth? data.labelWidth : '80px'}">
                 <el-row class="global-div-search">`
-
-    methods.resetSearch = `resetSearch() {
-        // 重置 searchData
-        this.searchData = {}
-    },`
 
     methods.search = `search(val) {
         if (val !== undefined) {
@@ -48,6 +43,11 @@ function generateSearch(data) {
                 </el-row>
             </el-form>
         </Search>`
+
+    methods.resetSearch = `resetSearch() {
+        // 重置 searchData
+        this.searchData = ${subSerializeData(searchData)}
+    },`
 
     return result
 }
