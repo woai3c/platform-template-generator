@@ -44,6 +44,9 @@ function generateSearch(data) {
             </el-form>
         </Search>`
 
+    
+    // 模糊查询参数
+    searchData.globalSearchValue = `''`
     methods.resetSearch = `resetSearch() {
         // 重置 searchData
         this.searchData = ${subSerializeData(searchData)}
