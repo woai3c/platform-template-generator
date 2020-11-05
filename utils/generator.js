@@ -1,6 +1,6 @@
 const { generateComponent } = require('./generateComponent')
 const { generateElementButton, generateVButton, isRightBtn } = require('./button')
-const { searchData, subSerializeData, methods, pageData, tableData, tableMethods, paginationData, paginationMethods } = require('./data')
+const { searchData, subSerializeData, methods, pageData, tableData, tableMethods, paginationData, paginationMethods, importData } = require('./data')
 const { generateAttrStr, generateEventsStr } = require('./index')
 
 function generateSearch(data) {
@@ -67,6 +67,10 @@ function generateButton(data, hasTable) {
     let leftBtnStr = ''
     let rightBtnStr = ''
     data.forEach(item => {
+        if (item.attrs && item.attrs.type == 'export') {
+            importData.export = `import { downloadFile } from '@/utils/utils'`
+        }
+
         if (item.type == 'el-button') {
             leftBtnStr += generateElementButton(item)
         } else {

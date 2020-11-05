@@ -8,6 +8,8 @@ const methods = {
         this.getCheckboxCache()
     },`,
 }
+
+const importData = {}
 const searchData = {}
 const pageData = {
     data: {
@@ -120,6 +122,7 @@ const paginationMethods = {
 function serialize() {
     let result = 
 `
+${serializeImportData()}
 export default {
     data() {
         const options = []
@@ -170,6 +173,16 @@ function serializeMethods() {
     return result
 }
 
+function serializeImportData() {
+    let result = ''
+
+    Object.keys(importData).forEach(key => {
+        result += importData[key] + '\n'
+    })
+
+    return result
+}
+
 module.exports = {
     searchData,
     methods,
@@ -180,4 +193,5 @@ module.exports = {
     paginationMethods,
     subSerializeData,
     serialize,
+    importData
 }
